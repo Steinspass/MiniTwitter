@@ -2,6 +2,7 @@ package com.naimdridi.introkotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.naimdridi.introkotlin.Others.ControlFlow
 import com.naimdridi.introkotlin.Others.Operators
 import com.naimdridi.introkotlin.Others.Variables
 
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         Variables().showCases()
         Operators().showCases()
+        ControlFlow().showCases()
 
     }
 }
