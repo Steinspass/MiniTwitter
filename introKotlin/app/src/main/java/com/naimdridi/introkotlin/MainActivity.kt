@@ -2,10 +2,7 @@ package com.naimdridi.introkotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.naimdridi.introkotlin.Others.ControlFlow
-import com.naimdridi.introkotlin.Others.Interfaces
-import com.naimdridi.introkotlin.Others.Operators
-import com.naimdridi.introkotlin.Others.Variables
+import com.naimdridi.introkotlin.Others.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         Operators().showCases()
         ControlFlow().showCases()
         Interfaces().showCases()
+        Classes().showCases()
 
     }
 }
