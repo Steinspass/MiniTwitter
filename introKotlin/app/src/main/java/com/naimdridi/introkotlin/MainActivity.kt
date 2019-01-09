@@ -15,6 +15,12 @@ class MainActivity : AppCompatActivity() {
         ControlFlow().showCases()
         Interfaces().showCases()
         Classes().showCases()
+        Functions().showCases()
+        CompanionObject().showCases()
+
+
+        // Extension Functions
+        "".welcomeKotlin()
 
     }
 }
