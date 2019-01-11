@@ -10,4 +10,13 @@
     <string name="button_to_shared_preferences">8. To Shared Preferences</string>
     <string name="button_to_extensions_functions">9. To Extension Functions</string>
 
+    <string name="button_click_xml">Click by XML</string>
+    <string name="button_click_line">Click in Line</string>
+    <string name="button_click_multi1">Multiple Buttons 1</string>
+    <string name="button_click_multi2">Multiple Buttons 2</string>
+    <string name="button_click_multi3">Multiple Buttons 3</string>
+
+    <string name="button_by_id">Button By FindViewByID</string>
+    <string name="button_by_kat">Button By kat</string>
+
 </resources>
