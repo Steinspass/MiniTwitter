@@ -10,9 +10,15 @@ import kotlinx.android.synthetic.main.activity_intent_extras.*
 
 class IntentExtrasActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: android.support.v7.widget.Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intent_extras)
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         buttonBack.setOnClickListener { startActivity(Intent(this, IntentsActivity::class.java)) }
 

@@ -9,9 +9,14 @@ import kotlinx.android.synthetic.main.activity_intents.*
 
 class IntentsActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: android.support.v7.widget.Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intents)
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         buttonIntentExtras.setOnClickListener { goIntentExtras() }
         buttonIntentFlags.setOnClickListener { goIntentFlags() }

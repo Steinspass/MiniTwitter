@@ -1,4 +1,4 @@
-package com.naimdridi.seccion_01_dev_android_in_kotlin.Activities
+package com.naimdridi.seccion_01_dev_android_in_kotlin.Others
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

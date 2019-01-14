@@ -9,6 +9,7 @@ import com.naimdridi.seccion_01_dev_android_in_kotlin.R
 
 class ClickEventsActivity : AppCompatActivity(), View.OnLongClickListener {
 
+    private lateinit var toolbar: android.support.v7.widget.Toolbar
 
     // 1) Click en XML, no utilizar ya que agrega logica en el XML que es donde deberia haber solo parte grafica y de diseño
     // 2) Click en linea
@@ -17,6 +18,9 @@ class ClickEventsActivity : AppCompatActivity(), View.OnLongClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_click_events)
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         clickInLine()
         ClickLongListener()
 

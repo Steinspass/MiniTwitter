@@ -7,6 +7,10 @@
         android:layout_height="match_parent"
         tools:context=".Activities.ClickEventsActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
 
     <Button
             android:text="@string/button_click_xml"

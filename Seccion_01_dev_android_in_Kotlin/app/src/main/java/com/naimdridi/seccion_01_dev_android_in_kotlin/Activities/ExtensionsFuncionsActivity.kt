@@ -6,8 +6,12 @@ import com.naimdridi.seccion_01_dev_android_in_kotlin.R
 
 class ExtensionsFuncionsActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: android.support.v7.widget.Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_extensions_funcions)
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 }

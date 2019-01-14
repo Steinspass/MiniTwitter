@@ -1,4 +1,4 @@
-package com.naimdridi.seccion_01_dev_android_in_kotlin.Activities;
+package com.naimdridi.seccion_01_dev_android_in_kotlin.Others;
 /*
  * Copyright 2014 Julian Shen
  *

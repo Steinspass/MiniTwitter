@@ -11,9 +11,14 @@ import java.lang.Exception
 
 class PicassoActivity : AppCompatActivity() {
 
+    private lateinit var toolbar: android.support.v7.widget.Toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_picasso)
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         buttonLoad.setOnClickListener { loadImages() }
 

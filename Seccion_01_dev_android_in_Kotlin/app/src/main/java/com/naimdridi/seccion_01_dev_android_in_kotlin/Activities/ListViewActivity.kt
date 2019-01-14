@@ -11,10 +11,14 @@ class ListViewActivity : AppCompatActivity() {
 
     private lateinit var adapter: PersonAdapter
     private lateinit var personList: List<Person>
+    private lateinit var toolbar: android.support.v7.widget.Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_view)
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         personList = getPersons()
         adapter = PersonAdapter(this, R.layout.list_view_person, personList)
