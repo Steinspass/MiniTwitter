@@ -47,7 +47,7 @@ class PermissionsActivity : AppCompatActivity() {
         }
 
     }
-    
+
     // Utilizar la camara con permisos
     private fun getPictureFromCameraAskingPermissions(){
         // 1) Agragar permiso al manifest
