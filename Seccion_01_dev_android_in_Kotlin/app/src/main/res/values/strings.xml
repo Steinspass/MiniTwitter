@@ -30,4 +30,12 @@
     <string name="preferences_age_hint">Type age here</string>
     <string name="preferences_button_save">Save</string>
 
+    <string name="button_toast">Toast</string>
+    <string name="button_snack_bar">SnackBar</string>
+    <string name="button_load_url">Load Url</string>
+    <string name="button_go_to_activity">Go To Activity</string>
+
+    <string name="message_toast_ext_fun">Hello has hecho click en el button Toast</string>
+
+
 </resources>

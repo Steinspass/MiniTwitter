@@ -1,17 +1,16 @@
 package com.naimdridi.seccion_01_dev_android_in_kotlin.Adapters
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.naimdridi.seccion_01_dev_android_in_kotlin.Others.inflateM
 import com.naimdridi.seccion_01_dev_android_in_kotlin.models.Person
 import kotlinx.android.synthetic.main.list_view_person.view.*
 
 class PersonAdapter(val context: Context,val layout: Int, val list: List<Person>) : BaseAdapter(){
 
-    private val mInflator: LayoutInflater = LayoutInflater.from(context)
 
 
     override fun getItem(position: Int): Any {
@@ -32,7 +31,7 @@ class PersonAdapter(val context: Context,val layout: Int, val list: List<Person>
         val vh: PersonViewHolder
 
         if (convertView == null){
-            view = mInflator.inflate(layout, parent, false)
+            view = parent.inflateM(layout)
             vh = PersonViewHolder(view)
             view.tag = vh
         }else{
