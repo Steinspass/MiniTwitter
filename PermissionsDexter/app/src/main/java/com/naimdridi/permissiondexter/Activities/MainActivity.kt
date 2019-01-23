@@ -3,14 +3,20 @@ package com.naimdridi.permissiondexter.Activities
 import android.Manifest
 import android.app.Activity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.widget.TextView
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener
 import com.karumi.dexter.listener.single.PermissionListener
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener
 import com.naimdridi.permissiondexter.Enums.PermissionStatusEnum
 import com.naimdridi.permissiondexter.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,11 +30,78 @@ class MainActivity : Activity() {
         setButtonClicks()
 
     }
-    private fun checkCameraPermissions() = setPermissionHandler(Manifest.permission.CAMERA, textViewCamera)
+    // private fun checkCameraPermissions() = setPermissionHandler(Manifest.permission.CAMERA, textViewCamera)
+
+    //private fun checkCameraPermissions() = setCameraPermissionHandlerWithDialog()
+
+    private fun checkCameraPermissions() = setCameraPermissionHandlerWithSnackBar()
 
     private fun checkContactsPermissions() = setPermissionHandler(Manifest.permission.READ_CONTACTS, textViewContacts)
 
     private fun checkAudioPermissions() = setPermissionHandler(Manifest.permission.RECORD_AUDIO, textViewAudio)
+
+    private fun checkAllPermissions(){
+        Dexter.withActivity(this)
+            .withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.RECORD_AUDIO)
+            .withListener(object: MultiplePermissionsListener{
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    report?.let {
+                        for(permission in report.grantedPermissionResponses){
+                         when (permission.permissionName){
+                             Manifest.permission.CAMERA -> setPermissionStatus(textViewCamera, PermissionStatusEnum.GRANTED)
+                             Manifest.permission.READ_CONTACTS -> setPermissionStatus(textViewContacts, PermissionStatusEnum.GRANTED)
+                             Manifest.permission.RECORD_AUDIO -> setPermissionStatus(textViewAudio, PermissionStatusEnum.GRANTED)
+                         }
+
+                        }
+
+                        for (permission in report.deniedPermissionResponses){
+                            when(permission.permissionName){
+                                Manifest.permission.CAMERA -> {
+                                    if (permission.isPermanentlyDenied){
+                                        setPermissionStatus(textViewCamera, PermissionStatusEnum.PERMANENTLY_DENIED)
+                                    }else{
+                                        setPermissionStatus(textViewCamera, PermissionStatusEnum.DENIED)
+                                    }
+
+                                }
+
+                                Manifest.permission.READ_CONTACTS -> {
+                                    if (permission.isPermanentlyDenied){
+                                        setPermissionStatus(textViewContacts, PermissionStatusEnum.PERMANENTLY_DENIED)
+                                    }else{
+                                        setPermissionStatus(textViewContacts, PermissionStatusEnum.DENIED)
+                                    }
+
+                                }
+
+                                Manifest.permission.RECORD_AUDIO -> {
+                                    if (permission.isPermanentlyDenied){
+                                        setPermissionStatus(textViewAudio, PermissionStatusEnum.PERMANENTLY_DENIED)
+                                    }else{
+                                        setPermissionStatus(textViewAudio, PermissionStatusEnum.DENIED)
+                                    }
+
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    token?.continuePermissionRequest()
+                }
+
+            }).check()
+
+    }
         
 
     private fun setButtonClicks(){
@@ -36,7 +109,7 @@ class MainActivity : Activity() {
         buttonCamera.setOnClickListener { checkCameraPermissions() }
         buttonContacts.setOnClickListener { checkContactsPermissions() }
         buttonAudio.setOnClickListener { checkAudioPermissions() }
-        buttonAll.setOnClickListener {  }
+        buttonAll.setOnClickListener { checkAllPermissions() }
     }
 
     private fun setPermissionHandler(permission: String, textView: TextView) {
@@ -88,5 +161,94 @@ class MainActivity : Activity() {
         }
 
     }
+
+
+    private fun setCameraPermissionHandlerWithDialog() {
+        val dialogPermissionListener = DialogOnDeniedPermissionListener.Builder
+            .withContext(this)
+            .withTitle("Camera Permission")
+            .withMessage("Camera permission is needed to take pictures")
+            .withButtonText(android.R.string.ok)
+            .withIcon(R.mipmap.ic_launcher)
+            .build()
+
+        val permission = object: PermissionListener{
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                setPermissionStatus(textViewCamera, PermissionStatusEnum.GRANTED)
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                if(response.isPermanentlyDenied){
+                    setPermissionStatus(textViewCamera, PermissionStatusEnum.PERMANENTLY_DENIED)
+                }else{
+                    setPermissionStatus(textViewCamera, PermissionStatusEnum.DENIED)
+                }
+            }
+
+            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                token?.continuePermissionRequest()
+            }
+
+
+
+        }
+
+       val composite = CompositePermissionListener(dialogPermissionListener, permission)
+
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(composite)
+                .check()
+
+    }
+
+    private fun setCameraPermissionHandlerWithSnackBar() {
+
+        val snackBarPermissionListener = SnackbarOnDeniedPermissionListener.Builder
+            .with(ConstraintMain, "Camera is needed to take pictures")
+            .withOpenSettingsButton("Settings")
+            .withCallback(object: Snackbar.Callback(){
+
+                override fun onShown(sb: Snackbar?) {
+                    // Event handler for when the given SnackBar is visible
+
+                }
+
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    // Event handler for when the given SnackBar has been dismissed
+                }
+
+            }).build()
+
+        val permission = object: PermissionListener{
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                setPermissionStatus(textViewCamera, PermissionStatusEnum.GRANTED)
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                if(response.isPermanentlyDenied){
+                    setPermissionStatus(textViewCamera, PermissionStatusEnum.PERMANENTLY_DENIED)
+                }else{
+                    setPermissionStatus(textViewCamera, PermissionStatusEnum.DENIED)
+                }
+            }
+
+            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+                token?.continuePermissionRequest()
+            }
+
+
+
+        }
+
+        val composite = CompositePermissionListener(permission, snackBarPermissionListener)
+
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.CAMERA)
+            .withListener(composite)
+            .check()
+
+    }
+
 
 }
