@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Seccion_02_drawer_fragments_recyclerView</string>
+    <string name="app_name">Seccion_02</string>
+
+    <string name="user_name">Naim Dridi</string>
+    <string name="user_email">steins11@gmail.com</string>
+
+    <string name="open_drawer">Navigation Drawer is open</string>
+    <string name="close_drawer">Navigation Drawer is close</string>
+
+    <string name="home_fragment_title">Home</string>
+    <string name="home_fragment_hello">Hello from the Home</string>
+    <string name="arrivals_fragment_title">Arrivals</string>
+    <string name="arrivals_fragment_hello">Hello from Arrivals</string>
+    <string name="departures_fragments_title">Departures</string>
+    <string name="departures_fragments_hello">Hello from Departure</string>
+
 </resources>
