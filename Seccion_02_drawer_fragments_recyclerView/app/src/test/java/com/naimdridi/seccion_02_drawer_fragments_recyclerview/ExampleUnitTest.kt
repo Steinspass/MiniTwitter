@@ -1,4 +1,4 @@
-package com.naimdridi.seccion_02
+package com.naimdridi.seccion_02_drawer_fragments_recyclerview
 
 import org.junit.Test
 

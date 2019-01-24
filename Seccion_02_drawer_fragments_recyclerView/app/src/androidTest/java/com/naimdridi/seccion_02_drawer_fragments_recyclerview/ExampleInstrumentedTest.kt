@@ -1,4 +1,4 @@
-package com.naimdridi.seccion_02
+package com.naimdridi.seccion_02_drawer_fragments_recyclerview
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.naimdridi.seccion_02", appContext.packageName)
+        assertEquals("com.naimdridi.seccion_02_drawer_fragments_recyclerview", appContext.packageName)
     }
 }

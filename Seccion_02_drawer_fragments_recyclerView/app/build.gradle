@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.naimdridi.seccion_02"
+        applicationId "com.naimdridi.seccion_02_drawer_fragments_recyclerview"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
