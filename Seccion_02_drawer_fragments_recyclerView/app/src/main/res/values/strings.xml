@@ -12,6 +12,8 @@
     <string name="arrivals_fragment_title">Arrivals</string>
     <string name="arrivals_fragment_hello">Hello from Arrivals</string>
     <string name="departures_fragments_title">Departures</string>
-    <string name="departures_fragments_hello">Hello from Departure</string>
+    <string name="departures_fragments_hello">Hello from Departures</string>
+
+
 
 </resources>
