@@ -16,6 +16,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        activity?.setTitle(R.string.home_fragment_title)
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 

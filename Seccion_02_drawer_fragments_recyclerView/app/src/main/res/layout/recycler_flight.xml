@@ -18,10 +18,10 @@
                 android:id="@+id/imageViewBg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-        
+
         <View android:layout_width="match_parent"
               android:layout_height="30dp"
-                android:background="#3000"/>
+              android:background="#3000"/>
 
         <TextView
                 android:id="@+id/textViewCityName"
@@ -35,7 +35,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold"/>
-        
+
         <ImageButton
                 android:id="@+id/button_delete"
                 android:layout_width="32dp"
