@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "630746542897",
+    "firebase_url": "https://finalapp-d9eb2.firebaseio.com",
+    "project_id": "finalapp-d9eb2",
+    "storage_bucket": "finalapp-d9eb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630746542897:android:ddaa28b250cb173e",
+        "android_client_info": {
+          "package_name": "com.naimdridi.finalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630746542897-c8hsif970k9fjfg7ta37fu6fo1effgvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaA1S646ambR2TdW0ObtvPvniFLyj6a0A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
