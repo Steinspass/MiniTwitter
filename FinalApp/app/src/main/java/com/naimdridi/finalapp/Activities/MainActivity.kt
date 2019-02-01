@@ -1,7 +1,8 @@
-package com.naimdridi.finalapp
+package com.naimdridi.finalapp.Activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.naimdridi.finalapp.R
 
 class MainActivity : AppCompatActivity() {
 

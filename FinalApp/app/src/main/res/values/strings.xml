@@ -11,7 +11,7 @@
     <string name="login_sign_in_google">Sign In with Google</string>
     <string name="login_forgot_password">I have forgotten my password</string>
     <string name="login_create_account">Create a new account</string>
-    <string name="login_go_to_login">Go back to Login</string>
+    <string name="go_to_login">Go back to Login</string>
 
 
 </resources>

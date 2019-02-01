@@ -19,14 +19,18 @@
                 android:layout_width="205dp"
                 android:layout_height="180dp"
                 android:src="@drawable/web_hi_res_512"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp" android:layout_marginTop="16dp"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/editTextEmail"/>
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextEmailSignUp"
+                android:id="@+id/imageView"/>
 
         <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/editTextEmailSignUp"
                 android:inputType="textEmailAddress"
                 android:hint="@string/login_email"
                 android:textSize="@dimen/login_text_size"
@@ -39,12 +43,31 @@
                 android:layout_marginStart="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="32dp"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/editTextPassword"/>
+                app:layout_constraintHorizontal_bias="1.0"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextPasswordSignUp"/>
         <EditText
-                android:id="@+id/editTextPassword"
+                android:id="@+id/editTextPasswordSignUp"
                 android:inputType="textPassword"
                 android:hint="@string/login_password"
+                android:textSize="@dimen/login_text_size"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_edit_text_height"
+                android:background="@drawable/edittext_rounded"
+                android:paddingLeft="@dimen/login_edit_text_space"
+                android:paddingRight="@dimen/login_edit_text_space"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextConfirmPassword"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="32dp"/>
+
+        <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:inputType="textPassword"
+                android:hint="@string/login_confirm_password"
                 android:textSize="@dimen/login_text_size"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_edit_text_height"
@@ -63,7 +86,7 @@
                 android:id="@+id/buttonLogIn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_button_xl_height"
-                android:text="@string/login_sign_in"
+                android:text="@string/login_sign_up"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/login_text_xl_size"
                 android:background="@drawable/button_ripple_bg"
@@ -71,40 +94,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewForgotPassword"/>
-
-        <TextView
-                android:id="@+id/textViewForgotPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_forgot_password"
-                android:textColor="@color/colorTextBlack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonLogInGoogle"/>
-        <Button
-                android:id="@+id/buttonLogInGoogle"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/login_button_height"
-                android:background="@drawable/button_ripple_google"
-                android:text="@string/login_sign_in_google"
-                android:textColor="@color/colorPrimaryText"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonSingUp"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="64dp"
+                app:layout_constraintBottom_toTopOf="@+id/buttonGoLogIn"/>
 
         <Button
-                android:id="@+id/buttonSingUp"
+                android:id="@+id/buttonGoLogIn"
                 android:layout_width="match_parent"
                 android:background="@drawable/button_ripple"
-                android:text="@string/login_create_account"
+                android:text="@string/go_to_login"
                 android:textColor="@color/colorPrimaryText"
                 android:layout_height="48dp"
                 app:layout_constraintStart_toStartOf="parent"
