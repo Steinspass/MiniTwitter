@@ -98,10 +98,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonSingUp"/>
+                app:layout_constraintBottom_toTopOf="@+id/buttonCreateAccount"/>
 
         <Button
-                android:id="@+id/buttonSingUp"
+                android:id="@+id/buttonCreateAccount"
                 android:layout_width="match_parent"
                 android:background="@drawable/button_ripple"
                 android:text="@string/login_create_account"

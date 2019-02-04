@@ -1,12 +1,13 @@
 package com.naimdridi.finalapp.Activities.loginActivities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import com.naimdridi.finalapp.R
+import com.naimdridi.my_library_second.Interfaces.Others.goToActivity
 import com.naimdridi.my_library_second.Interfaces.Others.toast
-
-
+import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -16,37 +17,49 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
-        val currentUser = mAuth.currentUser
-        if (currentUser !== null){
-            toast("User is NOT logged in")
-            createAccount("shady221.SH@gmail.com", "1234576889")
-        }else{
-            toast("User IS logged in")
-        }
-
-
+        clickListener()
 
     }
 
-    private fun createAccount(email: String, password: String){
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
+    private fun singUpByEmail(email: String, password: String){
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    toast("createUserWithEmail:success")
-                    val user = mAuth.currentUser
+                    toast("An email has been sent to you. Please confirm before sing in")
 
                 } else {
-                    // If sign in fails, display a message to the user.
-                    toast("createUserWithEmail:failure")
-
+                    toast("An expected error occurred, please try again ")
 
                 }
 
 
             }
     }
+
+    private fun isValidEmailAndPassword(email: String, password: String): Boolean{
+
+        return !email.isNullOrEmpty() && !password.isNullOrEmpty() &&
+                password === editTextConfirmPassword.text.toString()
+    }
+
+    private fun clickListener(){
+
+
+        buttonGoLogIn.setOnClickListener {
+            goToActivity<LoginActivity>{ flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK} }
+
+        buttonSingUP.setOnClickListener {
+            val email = editTextEmailSignUp.text.toString()
+            val password = editTextPasswordSignUp.text.toString()
+
+            if (isValidEmailAndPassword(email, password)){
+                singUpByEmail(email, password)
+            }else{
+                toast("Please fill all the data and confirm password is correct")
+            }
+        }
+
+    }
+
 
 
 }
