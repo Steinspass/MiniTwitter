@@ -21,14 +21,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         clickListeners()
 
-        if(mAuth.currentUser === null){
-            toast("Nope")
-        }else{
-            toast("Yep")
-            mAuth.signOut()
-        }
-
-
     }
 
 
@@ -59,8 +51,10 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        textViewForgotPassword.setOnClickListener { goToActivity<ForgotPasswordActivity>() }
-        buttonCreateAccount.setOnClickListener { goToActivity<SignUpActivity>() }
+        textViewForgotPassword.setOnClickListener { goToActivity<ForgotPasswordActivity>()
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)}
+        buttonCreateAccount.setOnClickListener { goToActivity<SignUpActivity>()
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)}
     }
 
 }

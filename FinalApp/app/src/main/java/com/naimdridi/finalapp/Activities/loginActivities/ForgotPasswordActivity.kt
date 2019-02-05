@@ -12,8 +12,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
+        clickListener()
 
+    }
+
+    private fun clickListener(){
         buttonGoLogIn.setOnClickListener {
-            goToActivity<LoginActivity>{ flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK } }
+            goToActivity<LoginActivity>{ flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out) }
     }
 }
