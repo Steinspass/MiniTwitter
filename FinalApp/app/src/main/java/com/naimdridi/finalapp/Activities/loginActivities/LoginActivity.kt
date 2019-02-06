@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import com.naimdridi.finalapp.R
-import com.naimdridi.my_library_second.Interfaces.Others.goToActivity
-import com.naimdridi.my_library_second.Interfaces.Others.toast
+import com.naimdridi.my_library_second.Interfaces.Others.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -23,11 +22,46 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun clickListeners(){
+
+        buttonLogIn.setOnClickListener {
+            val email = editTextEmail.text.toString()
+            val password = editTextPassword.text.toString()
+            if (isValidEmail(email) && isValidPassword(password)){
+                logInByEmail(email, password)
+            }else{
+                toast("Please make sure all the data is correct")
+            }
+
+        }
+
+        editTextEmail.validate {
+
+            editTextEmail.error = if (isValidEmail(it)) null else " Email is not valid "
+        }
+
+        editTextPassword.validate {
+
+            editTextPassword.error = if (isValidPassword(it)) null else " Your password should contain 8 characters length at least"
+        }
+
+        textViewForgotPassword.setOnClickListener { goToActivity<ForgotPasswordActivity>()
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)}
+
+
+        buttonCreateAccount.setOnClickListener { goToActivity<SignUpActivity>()
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)}
+    }
 
     private fun logInByEmail(email: String, password: String){
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful){
-                toast("User is now Logged in")
+                if (mAuth.currentUser!!.isEmailVerified){
+                    toast("User is now Logged in")
+                }else{
+                    toast("User must confirm email first")
+                }
+
             }else{
                 toast("An unexpected error occurred, please try again")
             }
@@ -35,26 +69,6 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun isValidEmailAndPassword(email: String, password: String): Boolean{
-        return !email.isNullOrEmpty() && !password.isNullOrEmpty()
-    }
 
-
-    private fun clickListeners(){
-
-        buttonLogIn.setOnClickListener {
-            val email = editTextEmail.text.toString()
-            val password = editTextPassword.text.toString()
-            if (isValidEmailAndPassword(email, password)){
-                logInByEmail(email, password)
-            }
-
-        }
-
-        textViewForgotPassword.setOnClickListener { goToActivity<ForgotPasswordActivity>()
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)}
-        buttonCreateAccount.setOnClickListener { goToActivity<SignUpActivity>()
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)}
-    }
 
 }
