@@ -18,6 +18,8 @@
     <string name="navigation_bottom_info">Info</string>
     <string name="navigation_bottom_chat">Chat</string>
     <string name="navigation_bottom_rate">Rates</string>
+    
+    <string name="chat_editText_message_hint">Type here a message...</string>
 
 
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph" app:startDestination="@id/signUpActivity">
+
+    <activity android:id="@+id/signUpActivity"
+              android:name="com.naimdridi.finalapp.Activities.loginActivities.SignUpActivity"
+              android:label="SignUpActivity"/>
+    <activity android:id="@+id/loginActivity"
+              android:name="com.naimdridi.finalapp.Activities.loginActivities.LoginActivity"
+              android:label="activity_forgot_password" tools:layout="@layout/activity_forgot_password"/>
+    <fragment android:id="@+id/chatFragment" android:name="com.naimdridi.finalapp.Activities.Fragments.ChatFragment"
+              android:label="fragment_chat" tools:layout="@layout/fragment_chat">
+        <action android:id="@+id/action_chatFragment_to_mainActivity" app:destination="@id/mainActivity"/>
+    </fragment>
+    <fragment android:id="@+id/infoFragment" android:name="com.naimdridi.finalapp.Activities.Fragments.InfoFragment"
+              android:label="fragment_info" tools:layout="@layout/fragment_info">
+        <action android:id="@+id/action_infoFragment_to_mainActivity" app:destination="@id/mainActivity"/>
+    </fragment>
+    <fragment android:id="@+id/rateFragment" android:name="com.naimdridi.finalapp.Activities.Fragments.RateFragment"
+              android:label="fragment_rate" tools:layout="@layout/fragment_rate">
+        <action android:id="@+id/action_rateFragment_to_mainActivity" app:destination="@id/mainActivity"/>
+    </fragment>
+    <activity android:id="@+id/mainActivity" android:name="com.naimdridi.finalapp.Activities.MainActivity"
+              android:label="activity_main" tools:layout="@layout/activity_main"/>
+</navigation>
