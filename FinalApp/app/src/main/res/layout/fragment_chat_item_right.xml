@@ -11,7 +11,7 @@
             android:id="@+id/imageViewProfileRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryText"
             android:background="@drawable/bubble_chat_right"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:maxWidth="300dp"
             android:paddingBottom="8dp"

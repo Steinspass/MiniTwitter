@@ -20,7 +20,7 @@
             android:id="@+id/textViewMessageLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorTextBlack"
             android:background="@drawable/bubble_chat_left"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"

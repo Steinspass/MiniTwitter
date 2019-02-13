@@ -35,6 +35,8 @@ class ChatFragment : Fragment() {
     private val store: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var chatDBRef: CollectionReference
 
+    private var chatSubcription: ListenerRegistration? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -73,7 +75,8 @@ class ChatFragment : Fragment() {
         _view.buttonSend.setOnClickListener {
             val messageText = editTextMessage.text.toString()
             if (messageText.isNotEmpty()){
-                val message = Message(currentUser.uid, messageText, currentUser.photoUrl.toString(), Date())
+                val photo = currentUser.photoUrl?.let { currentUser.photoUrl.toString() } ?: kotlin.run { "" }
+                val message = Message(currentUser.uid, messageText, photo, Date())
                 // Guardaremos el mensaje en Firebase
                 saveMessage(message)
                 _view.editTextMessage.setText("")
@@ -100,7 +103,10 @@ class ChatFragment : Fragment() {
     }
 
     private fun subscribeToChatMessage(){
-        chatDBRef.addSnapshotListener(object: java.util.EventListener, EventListener<QuerySnapshot>{
+        chatSubcription =chatDBRef
+            .orderBy("sentAt", Query.Direction.DESCENDING)
+            .limit(10000)
+            .addSnapshotListener(object: java.util.EventListener, EventListener<QuerySnapshot>{
 
             override fun onEvent(snapshot: QuerySnapshot?, exepcion: FirebaseFirestoreException?) {
                 exepcion?.let {
@@ -110,12 +116,18 @@ class ChatFragment : Fragment() {
                 snapshot?.let {
                     messageList.clear()
                     val messages = it.toObjects(Message::class.java)
-                    messageList.addAll(messages)
+                    messageList.addAll(messages.asReversed())
                     adapter.notifyDataSetChanged()
+                    _view.recyclerView.smoothScrollToPosition(messageList.size)
                 }
             }
 
         })
+    }
+
+    override fun onDestroy() {
+        chatSubcription?.remove()
+        super.onDestroy()
     }
 
 }

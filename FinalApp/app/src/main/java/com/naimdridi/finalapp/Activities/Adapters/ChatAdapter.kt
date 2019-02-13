@@ -48,9 +48,16 @@ class ChatAdapter(val items: List<Message>, val userId: String) : RecyclerView.A
             textViewMessageRight.text = message.message
             textViewTimeRight.text = SimpleDateFormat("hh:mm").format(message.sentAt)
             // Glide load image here
-            Glide.with(context).load(message.profileImageUrl)
-                .apply(RequestOptions.circleCropTransform().override(100, 100))
-                .into(imageViewProfileRight)
+            if (message.profileImageUrl.isEmpty()){
+                Glide.with(context).load(R.drawable.ic_person)
+                    .apply(RequestOptions.circleCropTransform().override(100, 100))
+                    .into(imageViewProfileRight)
+            }else{
+                Glide.with(context).load(message.profileImageUrl)
+                    .apply(RequestOptions.circleCropTransform().override(100, 100))
+                    .into(imageViewProfileRight)
+            }
+
 
         }
 
@@ -62,9 +69,15 @@ class ChatAdapter(val items: List<Message>, val userId: String) : RecyclerView.A
             textViewMessageLeft.text = message.message
             textViewTimeLeft.text = SimpleDateFormat("hh:mm").format(message.sentAt)
             // Glide load image here
-            Glide.with(context).load(message.profileImageUrl)
-                .apply(RequestOptions.circleCropTransform().override(100, 100))
-                .into(imageViewProfileLeft)
+            if (message.profileImageUrl.isEmpty()){
+                Glide.with(context).load(R.drawable.ic_person)
+                    .apply(RequestOptions.circleCropTransform().override(100, 100))
+                    .into(imageViewProfileLeft)
+            }else{
+                Glide.with(context).load(message.profileImageUrl)
+                    .apply(RequestOptions.circleCropTransform().override(100, 100))
+                    .into(imageViewProfileLeft)
+            }
         }
     }
 
