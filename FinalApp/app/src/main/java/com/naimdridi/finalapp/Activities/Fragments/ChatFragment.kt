@@ -35,7 +35,7 @@ class ChatFragment : Fragment() {
     private val store: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var chatDBRef: CollectionReference
 
-    private var chatSubcription: ListenerRegistration? = null
+    private var chatSubscription: ListenerRegistration? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -103,13 +103,13 @@ class ChatFragment : Fragment() {
     }
 
     private fun subscribeToChatMessage(){
-        chatSubcription =chatDBRef
+        chatSubscription =chatDBRef
             .orderBy("sentAt", Query.Direction.DESCENDING)
             .limit(10000)
             .addSnapshotListener(object: java.util.EventListener, EventListener<QuerySnapshot>{
 
-            override fun onEvent(snapshot: QuerySnapshot?, exepcion: FirebaseFirestoreException?) {
-                exepcion?.let {
+            override fun onEvent(snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) {
+                exception?.let {
                     activity!!.toast("Exception!")
                     return
                 }
@@ -126,7 +126,7 @@ class ChatFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        chatSubcription?.remove()
+        chatSubscription?.remove()
         super.onDestroy()
     }
 
