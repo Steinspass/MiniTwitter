@@ -3,6 +3,7 @@ package com.naimdridi.finalapp.Activities.Fragments
 
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -13,10 +14,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.naimdridi.finalapp.Activities.Models.TotalMessagesEvent
+import com.naimdridi.finalapp.Activities.Utils.RxBus
 import com.naimdridi.finalapp.R
 import com.naimdridi.my_library_second.Interfaces.Others.toast
 import kotlinx.android.synthetic.main.fragment_info.view.*
-import java.lang.Exception
+
 
 
 class InfoFragment : Fragment() {
@@ -47,7 +50,10 @@ class InfoFragment : Fragment() {
 
 
         // Total messages to Firebase Style
-        subscribeToTotalMessagesFirebaseStyle()
+        //subscribeToTotalMessagesFirebaseStyle()
+
+        // Total Messages Event Bus + Reactive Style
+        subscribeToTotalMessagesEventBusReactiveStyle()
         
 
 
@@ -82,7 +88,7 @@ class InfoFragment : Fragment() {
     }
 
     private fun subscribeToTotalMessagesFirebaseStyle(){
-        chatDBRef.addSnapshotListener(object: java.util.EventListener, EventListener<QuerySnapshot>{
+        chatSubscription = chatDBRef.addSnapshotListener(object: java.util.EventListener, EventListener<QuerySnapshot>{
             override fun onEvent(querysnapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) {
                 exception?.let {
                     activity!!.toast("Exception!")
@@ -95,5 +101,19 @@ class InfoFragment : Fragment() {
         })
 
     }
+
+    private fun subscribeToTotalMessagesEventBusReactiveStyle() {
+        RxBus.listen(TotalMessagesEvent::class.java).subscribe({
+            _view.textViewInfoTotalMessage.text = "${it.total}"
+        })
+    }
+
+    override fun onDestroyView() {
+        chatSubscription?.remove()
+        super.onDestroyView()
+    }
+
+
+
 
 }

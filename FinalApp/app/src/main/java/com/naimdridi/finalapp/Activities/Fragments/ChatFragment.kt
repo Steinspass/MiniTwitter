@@ -14,6 +14,8 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
 import com.naimdridi.finalapp.Activities.Adapters.ChatAdapter
 import com.naimdridi.finalapp.Activities.Models.Message
+import com.naimdridi.finalapp.Activities.Models.TotalMessagesEvent
+import com.naimdridi.finalapp.Activities.Utils.RxBus
 
 import com.naimdridi.finalapp.R
 import com.naimdridi.my_library_second.Interfaces.Others.toast
@@ -119,15 +121,16 @@ class ChatFragment : Fragment() {
                     messageList.addAll(messages.asReversed())
                     adapter.notifyDataSetChanged()
                     _view.recyclerView.smoothScrollToPosition(messageList.size)
+                    RxBus.publish(TotalMessagesEvent(messageList.size))
                 }
             }
 
         })
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         chatSubscription?.remove()
-        super.onDestroy()
+        super.onDestroyView()
     }
 
 }
