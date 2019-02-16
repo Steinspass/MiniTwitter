@@ -26,10 +26,12 @@
 
     <string name="options_menu_sign_out">Log Out</string>
 
+    <!-- Rating View -->
 
-
-
-
+    <string name="dialog_title">Rate the App!</string>
+    <string name="dialog_edit_text_hint">Leave your feedback</string>
+    <string name="dialog_ok">Rate</string>
+    <string name="dialog_cancel">Cancel</string>
 
 
 </resources>

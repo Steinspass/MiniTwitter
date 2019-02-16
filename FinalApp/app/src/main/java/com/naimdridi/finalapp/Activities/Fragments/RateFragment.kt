@@ -14,10 +14,15 @@ import com.naimdridi.finalapp.R
 
 class RateFragment : Fragment() {
 
+    private lateinit var _view: View
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_rate, container, false)
+         _view = inflater.inflate(R.layout.fragment_rate, container, false)
+
+
+        return _view
     }
 
 
