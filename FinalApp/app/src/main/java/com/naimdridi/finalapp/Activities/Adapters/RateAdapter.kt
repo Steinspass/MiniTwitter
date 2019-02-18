@@ -26,9 +26,16 @@ class RateAdapter(private val items: List<Rate>): RecyclerView.Adapter<RateAdapt
             itemView.textViewRate.text = rate.text
             itemView.textViewStar.text = rate.rate.toString()
             itemView.textViewCalendar.text = SimpleDateFormat("dd, MMM, yyyy").format(rate.createdAt)
-            Glide.with(itemView).load(rate.profileImgURL)
-                .apply(RequestOptions.circleCropTransform().override(60, 60))
-                .into(itemView.imageViewProfile)
+            if (rate.profileImgURL.isEmpty()){
+                Glide.with(itemView).load(R.drawable.ic_person)
+                    .apply(RequestOptions.circleCropTransform().override(60, 60))
+                    .into(itemView.imageViewProfile)
+            }else{
+                Glide.with(itemView).load(rate.profileImgURL)
+                    .apply(RequestOptions.circleCropTransform().override(60, 60))
+                    .into(itemView.imageViewProfile)
+            }
+
 
         }
     }

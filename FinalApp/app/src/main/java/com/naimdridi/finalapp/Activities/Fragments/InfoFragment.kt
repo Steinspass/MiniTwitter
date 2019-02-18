@@ -18,6 +18,7 @@ import com.naimdridi.finalapp.Activities.Models.TotalMessagesEvent
 import com.naimdridi.finalapp.Activities.Utils.RxBus
 import com.naimdridi.finalapp.R
 import com.naimdridi.my_library_second.Interfaces.Others.toast
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_info.view.*
 
 
@@ -33,6 +34,7 @@ class InfoFragment : Fragment() {
     private lateinit var chatDBRef: CollectionReference
 
     private var chatSubscription: ListenerRegistration? = null
+    private lateinit var infoBusListener: Disposable
 
     
 
@@ -103,12 +105,13 @@ class InfoFragment : Fragment() {
     }
 
     private fun subscribeToTotalMessagesEventBusReactiveStyle() {
-        RxBus.listen(TotalMessagesEvent::class.java).subscribe({
+        infoBusListener = RxBus.listen(TotalMessagesEvent::class.java).subscribe({
             _view.textViewInfoTotalMessage.text = "${it.total}"
         })
     }
 
     override fun onDestroyView() {
+        infoBusListener.dispose()
         chatSubscription?.remove()
         super.onDestroyView()
     }
