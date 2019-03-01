@@ -3,24 +3,27 @@ package com.naimdridi.ajetpackresponsivedesign
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import java.util.ArrayList
 
 
 class NotesFragment : Fragment() {
 
 
     // TODO: Customize parameters
-    private var columnCount = 1
+    private var columnCount = 3
 
-    private val noteList: ArrayList<Note> = ArrayList()
+    private lateinit var notesList: List<Note>
 
     private var listener: NotesIteractionListener? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +39,24 @@ class NotesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_notes_list, container, false)
 
+
+
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
+                val displayMetrics = context!!.resources.displayMetrics
+                val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+                val numColumns = (dpWidth / 180).toInt()
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+                    else -> StaggeredGridLayoutManager(numColumns , VERTICAL)
                 }
-                adapter = MyNotesRecyclerViewAdapter(noteList, listener)
+
+                notesList = getNotes()
+                adapter = MyNotesRecyclerViewAdapter(notesList, listener)
+
             }
+
         }
         return view
     }
@@ -78,6 +90,17 @@ class NotesFragment : Fragment() {
                 }
             }
     }
+
+    private fun getNotes(): List<Note>{
+        return listOf(
+            Note("Lista de la compra", "leche 1, cereales 2, fruta variada", true, android.R.color.holo_blue_dark),
+            Note("recoger", "leche 1, cereales 2, fruta variada", false, android.R.color.darker_gray),
+            Note("Quedada", "Malaga centro ", true, android.R.color.holo_orange_dark),
+            Note("Vaacaciones", "sitios a los que ir .......", false, android.R.color.holo_purple)
+        )
+    }
+
+
 
 
 }
