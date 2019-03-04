@@ -1,13 +1,11 @@
 package com.naimdridi.ajetpackresponsivedesign
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +17,8 @@ class NotesFragment : Fragment() {
     // TODO: Customize parameters
     private var columnCount = 3
 
-    private lateinit var notesList: List<Note>
+    private lateinit var notesList: List<EntityNote>
 
-    private var listener: NotesIteractionListener? = null
 
 
 
@@ -34,9 +31,7 @@ class NotesFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_notes_list, container, false)
 
 
@@ -53,7 +48,7 @@ class NotesFragment : Fragment() {
                 }
 
                 notesList = getNotes()
-                adapter = MyNotesRecyclerViewAdapter(notesList, listener)
+                adapter = MyNotesRecyclerViewAdapter(notesList, context)
 
             }
 
@@ -61,19 +56,7 @@ class NotesFragment : Fragment() {
         return view
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is NotesIteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement NotesIterationListener")
-        }
-    }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
 
 
     companion object {
@@ -91,12 +74,12 @@ class NotesFragment : Fragment() {
             }
     }
 
-    private fun getNotes(): List<Note>{
+    private fun getNotes(): List<EntityNote>{
         return listOf(
-            Note("Lista de la compra", "leche 1, cereales 2, fruta variada", true, android.R.color.holo_blue_dark),
-            Note("recoger", "leche 1, cereales 2, fruta variada", false, android.R.color.darker_gray),
-            Note("Quedada", "Malaga centro ", true, android.R.color.holo_orange_dark),
-            Note("Vaacaciones", "sitios a los que ir .......", false, android.R.color.holo_purple)
+            EntityNote("Lista de la compra", "leche 1, cereales 2, fruta variada", true, android.R.color.holo_blue_dark),
+            EntityNote("recoger", "leche 1, cereales 2, fruta variada", false, android.R.color.darker_gray),
+            EntityNote("Quedada", "Malaga centro ", true, android.R.color.holo_orange_dark),
+            EntityNote("Vaacaciones", "sitios a los que ir .......", false, android.R.color.holo_purple)
         )
     }
 

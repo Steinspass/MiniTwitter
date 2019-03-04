@@ -1,5 +1,6 @@
 package com.naimdridi.ajetpackresponsivedesign
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,8 @@ import kotlinx.android.synthetic.main.fragment_notes.view.*
 
 
 class MyNotesRecyclerViewAdapter(
-    private val mValues: List<Note>,
-    private val mListener: NotesIteractionListener?
+    private val mValues: List<EntityNote>,
+    private val context: Context
 ) : RecyclerView.Adapter<MyNotesRecyclerViewAdapter.ViewHolder>() {
 
 
@@ -33,8 +34,8 @@ class MyNotesRecyclerViewAdapter(
         }
 
         holder.stars.setOnClickListener {
-            if (null != mListener){
-                mListener.favoriteNoteClick(item)
+            if (null != context){
+
             }
         }
 
