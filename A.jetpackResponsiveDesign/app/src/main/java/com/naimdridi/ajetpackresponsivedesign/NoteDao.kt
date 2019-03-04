@@ -10,7 +10,7 @@ import android.arch.lifecycle.LiveData
 
 
 @Dao
-interface NoteDao {
+interface NotesDao {
 
     @Insert
     fun insert(note: EntityNote)
