@@ -1,4 +1,4 @@
-package com.naimdridi.ajetpackresponsivedesign
+package com.naimdridi.ajetpackresponsivedesign.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,6 +9,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.naimdridi.ajetpackresponsivedesign.R
+import com.naimdridi.ajetpackresponsivedesign.db.entity.EntityNote
 
 
 class NotesFragment : Fragment() {
@@ -76,10 +78,30 @@ class NotesFragment : Fragment() {
 
     private fun getNotes(): List<EntityNote>{
         return listOf(
-            EntityNote("Lista de la compra", "leche 1, cereales 2, fruta variada", true, android.R.color.holo_blue_dark),
-            EntityNote("recoger", "leche 1, cereales 2, fruta variada", false, android.R.color.darker_gray),
-            EntityNote("Quedada", "Malaga centro ", true, android.R.color.holo_orange_dark),
-            EntityNote("Vaacaciones", "sitios a los que ir .......", false, android.R.color.holo_purple)
+            EntityNote(
+                "Lista de la compra",
+                "leche 1, cereales 2, fruta variada",
+                true,
+                android.R.color.holo_blue_dark
+            ),
+            EntityNote(
+                "recoger",
+                "leche 1, cereales 2, fruta variada",
+                false,
+                android.R.color.darker_gray
+            ),
+            EntityNote(
+                "Quedada",
+                "Malaga centro ",
+                true,
+                android.R.color.holo_orange_dark
+            ),
+            EntityNote(
+                "Vaacaciones",
+                "sitios a los que ir .......",
+                false,
+                android.R.color.holo_purple
+            )
         )
     }
 

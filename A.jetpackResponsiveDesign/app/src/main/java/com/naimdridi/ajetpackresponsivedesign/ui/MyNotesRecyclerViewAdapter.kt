@@ -1,12 +1,12 @@
-package com.naimdridi.ajetpackresponsivedesign
+package com.naimdridi.ajetpackresponsivedesign.ui
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-
+import com.naimdridi.ajetpackresponsivedesign.R
+import com.naimdridi.ajetpackresponsivedesign.db.entity.EntityNote
 
 
 import kotlinx.android.synthetic.main.fragment_notes.view.*

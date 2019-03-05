@@ -1,4 +1,4 @@
-package com.naimdridi.ajetpackresponsivedesign
+package com.naimdridi.ajetpackresponsivedesign.ui
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

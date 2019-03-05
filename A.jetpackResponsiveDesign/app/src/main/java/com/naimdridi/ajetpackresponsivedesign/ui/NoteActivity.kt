@@ -1,9 +1,10 @@
-package com.naimdridi.ajetpackresponsivedesign
+package com.naimdridi.ajetpackresponsivedesign.ui
 
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.naimdridi.ajetpackresponsivedesign.R
 import kotlinx.android.synthetic.main.activity_note.*
 
 class NoteActivity : AppCompatActivity() {
@@ -20,7 +21,7 @@ class NoteActivity : AppCompatActivity() {
 
     }
 
-    private fun getPagerAdapter(): PagerAdapter{
+    private fun getPagerAdapter(): PagerAdapter {
         val adapter = PagerAdapter(supportFragmentManager)
         adapter.addFragment(NotesFragment())
 
