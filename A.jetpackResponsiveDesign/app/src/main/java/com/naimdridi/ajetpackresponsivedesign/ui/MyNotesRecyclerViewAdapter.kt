@@ -12,8 +12,10 @@ import com.naimdridi.ajetpackresponsivedesign.db.entity.EntityNote
 import kotlinx.android.synthetic.main.fragment_notes.view.*
 
 
+
+
 class MyNotesRecyclerViewAdapter(
-    private val mValues: List<EntityNote>,
+    private var mValues: List<EntityNote>,
     private val context: Context
 ) : RecyclerView.Adapter<MyNotesRecyclerViewAdapter.ViewHolder>() {
 
@@ -43,7 +45,12 @@ class MyNotesRecyclerViewAdapter(
 
     override fun getItemCount(): Int = mValues.size
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    fun setNewsNotes(newNotes: List<EntityNote>) {
+        this.mValues = newNotes
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val title = mView.textViewTitle
         val content = mView.textViewContent
         val stars = mView.imageViewStar

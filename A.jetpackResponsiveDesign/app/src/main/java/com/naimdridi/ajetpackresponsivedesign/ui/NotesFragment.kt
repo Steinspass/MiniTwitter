@@ -1,5 +1,7 @@
 package com.naimdridi.ajetpackresponsivedesign.ui
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,13 +15,17 @@ import com.naimdridi.ajetpackresponsivedesign.R
 import com.naimdridi.ajetpackresponsivedesign.db.entity.EntityNote
 
 
+
+
 class NotesFragment : Fragment() {
 
 
     // TODO: Customize parameters
     private var columnCount = 3
+    private lateinit var noteViewModel: NewNoteViewModel
 
     private lateinit var notesList: List<EntityNote>
+    private val adapterNotes: MyNotesRecyclerViewAdapter? = null
 
 
 
@@ -48,14 +54,21 @@ class NotesFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> StaggeredGridLayoutManager(numColumns , VERTICAL)
                 }
-
-                notesList = getNotes()
                 adapter = MyNotesRecyclerViewAdapter(notesList, context)
-
+                goToViewModel()
             }
-
         }
         return view
+    }
+
+    private fun goToViewModel(){
+        noteViewModel = ViewModelProviders.of(this).get(NewNoteViewModel::class.java)
+        noteViewModel.allNotes.observe(this,
+            Observer<List<EntityNote>> {
+                adapterNotes?.setNewsNotes(it!!)
+            })
+
+
     }
 
 
@@ -76,34 +89,7 @@ class NotesFragment : Fragment() {
             }
     }
 
-    private fun getNotes(): List<EntityNote>{
-        return listOf(
-            EntityNote(
-                "Lista de la compra",
-                "leche 1, cereales 2, fruta variada",
-                true,
-                android.R.color.holo_blue_dark
-            ),
-            EntityNote(
-                "recoger",
-                "leche 1, cereales 2, fruta variada",
-                false,
-                android.R.color.darker_gray
-            ),
-            EntityNote(
-                "Quedada",
-                "Malaga centro ",
-                true,
-                android.R.color.holo_orange_dark
-            ),
-            EntityNote(
-                "Vaacaciones",
-                "sitios a los que ir .......",
-                false,
-                android.R.color.holo_purple
-            )
-        )
-    }
+
 
 
 
