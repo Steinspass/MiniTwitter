@@ -1,10 +1,8 @@
-package com.naimdridi.ajetpackresponsivedesign
+package com.naimdridi.ajetpackresponsivedesign.db
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
-import android.support.annotation.WorkerThread
-import com.naimdridi.ajetpackresponsivedesign.db.NoteRoomDatabase
 import com.naimdridi.ajetpackresponsivedesign.db.dao.NotesDao
 import com.naimdridi.ajetpackresponsivedesign.db.entity.EntityNote
 
@@ -33,6 +31,21 @@ class NoteRepository(app: Application){
     private class insertAsyncTask internal constructor(private val mAsyncTaskDao: NotesDao) : AsyncTask<EntityNote, Void, Void>(){
         override fun doInBackground(vararg params: EntityNote): Void? {
           mAsyncTaskDao.insert(params[0])
+            return null
+        }
+
+    }
+
+
+    fun updateNote(EntityNotes: EntityNote) {
+        updateAsyncTask(noteDao).execute(EntityNotes)
+
+    }
+
+
+    private class updateAsyncTask internal constructor(private val mAsyncTaskDao: NotesDao) : AsyncTask<EntityNote, Void, Void>(){
+        override fun doInBackground(vararg params: EntityNote): Void? {
+            mAsyncTaskDao.update(params[0])
             return null
         }
 

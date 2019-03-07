@@ -6,10 +6,10 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "Notes")
 data class EntityNote(
 
-    val title: String,
-    val content: String,
-    val favorite: Boolean,
-    val color: String
+    var title: String ="",
+    var content: String ="",
+    var favorite: Boolean = false,
+    var color: String =""
 ){
-    @PrimaryKey(autoGenerate = true) val id: Int = 0
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
 }
