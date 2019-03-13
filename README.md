@@ -69,8 +69,11 @@ It is the final project of this course in which I learned to create a Login syst
 
 ## -In the A.jetpackResponsiveDesign folder
 
-It is the first part of the Advanced android course, in which I learn to use Android Jetpack Responsive Design with Database Local Room with ViewModel
+It is the first part of the Advanced android course, in which I learn to use Android Jetpack Responsive Design with Database Local Room with ViewModel.
 
+## -In the MiniTwitter folder
+
+In this folder I learn to use Api or Web Service with the Retrofit library together with Gson, I also create an App taking as a reference the Twitter App but with more basic functions.
 
 
   
