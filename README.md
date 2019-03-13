@@ -67,6 +67,9 @@ In this folder I learned to use the dexter library to be able to request and con
 
 It is the final project of this course in which I learned to create a Login system to be able to login with Email or Gmail with FireBase and use this google platform. Also to create a real-time chat and a DataBase in Firebase. Create all the drawables for the chat elements and a theme for the App.
 
+## -In the A.jetpackResponsiveDesign folder
+
+It is the first part of the Advanced android course, in which I learn to use Android Jetpack Responsive Design with Database Local Room with ViewModel
 
 
 
