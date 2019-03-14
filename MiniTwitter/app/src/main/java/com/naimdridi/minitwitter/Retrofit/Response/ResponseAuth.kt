@@ -1,4 +1,4 @@
-package com.naimdridi.minitwitter
+package com.naimdridi.minitwitter.Retrofit.Response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

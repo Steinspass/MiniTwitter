@@ -1,11 +1,20 @@
-package com.naimdridi.minitwitter
+package com.naimdridi.minitwitter.ui
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.naimdridi.minitwitter.R
+import com.naimdridi.minitwitter.Retrofit.MiniTwitterClient
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import com.naimdridi.minitwitter.Retrofit.MiniTwitterService
+
+
+
 
 class SignUpActivity : AppCompatActivity() {
+
+    lateinit var miniTwitterClient: MiniTwitterClient
+    lateinit var miniTwitterService: MiniTwitterService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,7 +23,10 @@ class SignUpActivity : AppCompatActivity() {
         clicksListeners()
     }
 
+
+
     private fun clicksListeners(){
+
         buttonSignUp.setOnClickListener {  }
         textView.setOnClickListener { goToLogin() }
     }

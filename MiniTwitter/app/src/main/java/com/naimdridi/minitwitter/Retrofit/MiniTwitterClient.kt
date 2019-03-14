@@ -29,6 +29,10 @@ class MiniTwitterClient {
         }
     }
 
+    fun getMiniTwitterService(): MiniTwitterService {
+        return miniTwitterService
+    }
+
 
 
 
