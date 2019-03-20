@@ -1,6 +1,5 @@
 package com.naimdridi.minitwitter.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -10,12 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.naimdridi.minitwitter.R
+import com.naimdridi.minitwitter.Retrofit.AuthTwitterClient
+import com.naimdridi.minitwitter.Retrofit.AuthTwitterService
 import com.naimdridi.minitwitter.Retrofit.Response.Tweet
-
-
-
-
-
+import android.widget.Toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 
@@ -27,6 +27,8 @@ class TweetListFragment : Fragment() {
     private var adapter: MyTweetRecyclerViewAdapter? = null
     private lateinit var recycler: RecyclerView
     var tweetList: List<Tweet>? = null
+    lateinit var authTwitterService: AuthTwitterService
+    lateinit var authTwitterClient: AuthTwitterClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,25 +44,47 @@ class TweetListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_tweet_list, container, false)
 
-        // Set the adapter
         if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                loadTweetData()
+            val context = view.getContext()
+            recycler = view as RecyclerView
+            if (columnCount <= 1) {
+                recycler.layoutManager = LinearLayoutManager(context)
+            } else {
+                recycler.layoutManager = GridLayoutManager(context, columnCount)
             }
+
+            retrofitInit()
+            loadTweetData()
         }
         return view
     }
 
+    private fun retrofitInit() {
+        authTwitterClient = AuthTwitterClient.getInstance()
+        authTwitterService = authTwitterClient.getAuthTwitterService()
+    }
+
     private fun loadTweetData(){
-        adapter = MyTweetRecyclerViewAdapter(
-            activity,
-            tweetList
-        )
-        recycler.adapter = adapter
+        val call = authTwitterService.allTweets
+        call.enqueue(object : Callback<List<Tweet>> {
+            override fun onResponse(call: Call<List<Tweet>>, response: Response<List<Tweet>>) {
+                if (response.isSuccessful) {
+                    tweetList = response.body()
+                    adapter = MyTweetRecyclerViewAdapter(
+                        activity!!,
+                        tweetList!!
+                    )
+                    recycler.adapter = adapter
+                } else {
+                    Toast.makeText(activity, "Algo ha ido mal", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Tweet>>, t: Throwable) {
+                Toast.makeText(activity, "Error en la conexión", Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 
     companion object {

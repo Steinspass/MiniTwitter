@@ -3,8 +3,12 @@ package com.naimdridi.minitwitter.ui
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.naimdridi.minitwitter.R
 import kotlinx.android.synthetic.main.activity_dashboard.*
+
+
+
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -27,7 +31,17 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        supportActionBar!!.hide()
+
+        val navigation = findViewById<View>(R.id.navigation) as BottomNavigationView
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragmentContainer, TweetListFragment())
+            .commit()
 
     }
 }

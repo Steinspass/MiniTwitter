@@ -1,37 +1,28 @@
 package com.naimdridi.minitwitter.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.naimdridi.minitwitter.R
+import com.naimdridi.minitwitter.Retrofit.Response.Tweet
+import com.naimdridi.minitwitter.common.Constans
+import com.naimdridi.minitwitter.common.SharedPreferencesManager
 
 
-import com.naimdridi.minitwitter.ui.TweetListFragment.OnListFragmentInteractionListener
-import com.naimdridi.minitwitter.ui.dummy.DummyContent.DummyItem
 
-import kotlinx.android.synthetic.main.fragment_tweet.view.*
-
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
-class MyTweetRecyclerViewAdapter(
-    private val mValues: List<DummyItem>,
-    private val mListener: OnListFragmentInteractionListener?
-) : RecyclerView.Adapter<MyTweetRecyclerViewAdapter.ViewHolder>() {
-
-    private val mOnClickListener: View.OnClickListener
+class MyTweetRecyclerViewAdapter(private val ctx: Context, private val mValues: List<Tweet>) :
+    RecyclerView.Adapter<MyTweetRecyclerViewAdapter.ViewHolder>() {
+    internal var username: String? = null
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
-        }
+        username = SharedPreferencesManager().getSomeStringValue(Constans.PREF_USERNAME)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,25 +31,56 @@ class MyTweetRecyclerViewAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.mItem = mValues[position]
 
-        with(holder.mView) {
-            tag = item
-            setOnClickListener(mOnClickListener)
+        holder.tvUsername.text = holder.mItem!!.user!!.username
+        holder.tvMessage.text = holder.mItem!!.mensaje
+        holder.tvLikesCount.text = holder.mItem!!.likes.size.toString()
+
+        val photo = holder.mItem!!.user!!.photoUrl
+        if (photo != "") {
+            Glide.with(ctx)
+                .load("https://www.minitwitter.com/apiv1/uploads/photos/" + photo!!)
+                .into(holder.ivAvatar)
         }
+
+        for (like in holder.mItem!!.likes) {
+            if (like.username == username) {
+                Glide.with(ctx)
+                    .load(R.drawable.ic_like_black)
+                    .into(holder.ivLike)
+                holder.tvLikesCount.setTextColor(R.color.pink)
+                holder.tvLikesCount.setTypeface(null, Typeface.BOLD)
+                break
+            }
+        }
+
     }
 
-    override fun getItemCount(): Int = mValues.size
+    override fun getItemCount(): Int {
+        return mValues.size
+    }
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+    inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
+        val ivAvatar: ImageView
+        val ivLike: ImageView
+        val tvUsername: TextView
+        val tvMessage: TextView
+        val tvLikesCount: TextView
+        var mItem: Tweet? = null
+
+        init {
+            ivAvatar = mView.findViewById(R.id.imageViewAvatar)
+            ivLike = mView.findViewById(R.id.imageViewLike)
+            tvUsername = mView.findViewById(R.id.textViewUsername)
+            tvMessage = mView.findViewById(R.id.textViewMessage)
+            tvLikesCount = mView.findViewById(R.id.textViewLikes)
+        }
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + tvUsername.text + "'"
         }
     }
 }
