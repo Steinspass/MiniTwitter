@@ -17,7 +17,10 @@ import com.naimdridi.minitwitter.common.SharedPreferencesManager
 
 
 
-class MyTweetRecyclerViewAdapter(private val ctx: Context, private val mValues: List<Tweet>) :
+
+
+
+class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: List<Tweet>?) :
     RecyclerView.Adapter<MyTweetRecyclerViewAdapter.ViewHolder>() {
     internal var username: String? = null
 
@@ -33,35 +36,46 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private val mValues: 
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mItem = mValues[position]
+        if (mValues != null){
+            holder.mItem = mValues!![position]
 
-        holder.tvUsername.text = holder.mItem!!.user!!.username
-        holder.tvMessage.text = holder.mItem!!.mensaje
-        holder.tvLikesCount.text = holder.mItem!!.likes.size.toString()
+            holder.tvUsername.text = holder.mItem!!.user!!.username
+            holder.tvMessage.text = holder.mItem!!.mensaje
+            holder.tvLikesCount.text = holder.mItem!!.likes.size.toString()
 
-        val photo = holder.mItem!!.user!!.photoUrl
-        if (photo != "") {
-            Glide.with(ctx)
-                .load("https://www.minitwitter.com/apiv1/uploads/photos/" + photo!!)
-                .into(holder.ivAvatar)
-        }
-
-        for (like in holder.mItem!!.likes) {
-            if (like.username == username) {
+            val photo = holder.mItem!!.user!!.photoUrl
+            if (photo != "") {
                 Glide.with(ctx)
-                    .load(R.drawable.ic_like_black)
-                    .into(holder.ivLike)
-                holder.tvLikesCount.setTextColor(R.color.pink)
-                holder.tvLikesCount.setTypeface(null, Typeface.BOLD)
-                break
+                    .load("https://www.minitwitter.com/apiv1/uploads/photos/" + photo!!)
+                    .into(holder.ivAvatar)
+            }
+
+            for (like in holder.mItem!!.likes) {
+                if (like.username == username) {
+                    Glide.with(ctx)
+                        .load(R.drawable.ic_like_black)
+                        .into(holder.ivLike)
+                    holder.tvLikesCount.setTextColor(R.color.pink)
+                    holder.tvLikesCount.setTypeface(null, Typeface.BOLD)
+                    break
+                }
             }
         }
+
 
     }
 
     override fun getItemCount(): Int {
-        return mValues.size
+        if(mValues != null)
+            return mValues!!.size
+        else return 0
     }
+
+    fun setData(tweetList: List<Tweet>) {
+        this.mValues = tweetList
+        notifyDataSetChanged()
+    }
+
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val ivAvatar: ImageView
