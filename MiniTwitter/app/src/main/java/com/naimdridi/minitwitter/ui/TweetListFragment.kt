@@ -3,7 +3,6 @@ package com.naimdridi.minitwitter.ui
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,11 +12,7 @@ import com.naimdridi.minitwitter.R
 import com.naimdridi.minitwitter.Retrofit.Response.Tweet
 import com.naimdridi.minitwitter.data.TweetViewModel
 import android.arch.lifecycle.Observer
-
-
-
-
-
+import kotlinx.android.synthetic.main.fragment_tweet_list.view.*
 
 
 class TweetListFragment : Fragment() {
@@ -44,15 +39,13 @@ class TweetListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_tweet_list, container, false)
 
-        if (view is RecyclerView) {
-            val context = view.getContext()
+
+        if (view.list is RecyclerView) {
+            val context = view.context
             recycler = view as RecyclerView
             if (columnCount <= 1) {
                 recycler.layoutManager = LinearLayoutManager(context)
-            } else {
-                recycler.layoutManager = GridLayoutManager(context, columnCount)
             }
-
             adapter = MyTweetRecyclerViewAdapter(
                 activity!!,
                 tweetList

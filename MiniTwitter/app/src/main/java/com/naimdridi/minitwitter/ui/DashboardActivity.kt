@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.bumptech.glide.Glide
 import com.naimdridi.minitwitter.R
+import com.naimdridi.minitwitter.common.Constans
+import com.naimdridi.minitwitter.common.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 
@@ -43,5 +46,23 @@ class DashboardActivity : AppCompatActivity() {
             .add(R.id.fragmentContainer, TweetListFragment())
             .commit()
 
+        setUpFab()
+
+        val photoUrl = SharedPreferencesManager().getSomeStringValue(Constans.PREF_PHOTOURL)
+        if (photoUrl!!.isNotEmpty()) {
+            Glide.with(this)
+                .load(Constans.API_MINITWITTER_FILES_URL + photoUrl)
+                .into(this.imageViewToolbarPhoto)
+        }
+
+    }
+
+    private fun setUpFab(){
+
+        fab.setOnClickListener {
+           val dialog = NewTweetDialogFragment()
+            dialog.show(supportFragmentManager, "NewTweetDialogFragment")
+
+        }
     }
 }

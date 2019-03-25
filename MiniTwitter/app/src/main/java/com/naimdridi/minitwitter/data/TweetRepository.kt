@@ -3,20 +3,24 @@ package com.naimdridi.minitwitter.data
 import com.naimdridi.minitwitter.Retrofit.AuthTwitterClient
 import com.naimdridi.minitwitter.Retrofit.AuthTwitterService
 import com.naimdridi.minitwitter.Retrofit.Response.Tweet
-import android.arch.lifecycle.LiveData
 import android.widget.Toast
 import com.naimdridi.minitwitter.common.MyApp
 import android.arch.lifecycle.MutableLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.naimdridi.minitwitter.Retrofit.Request.RequestCreateTweet
+
+
+
+
 
 
 
 class TweetRepository internal constructor() {
     internal var authTwitterService: AuthTwitterService
     internal var authTwitterClient: AuthTwitterClient
-    internal var allTweets: LiveData<List<Tweet>>
+    internal var allTweets: MutableLiveData<List<Tweet>>
 
     init {
         authTwitterClient = AuthTwitterClient.getInstance()
@@ -24,14 +28,18 @@ class TweetRepository internal constructor() {
         allTweets = getAllTweets()
     }
 
-    fun getAllTweets(): LiveData<List<Tweet>> {
-        val data = MutableLiveData<List<Tweet>>()
+    fun getAllTweets(): MutableLiveData<List<Tweet>> {
+        if (allTweets == null) {
+            allTweets = MutableLiveData()
+        }
+
+
 
         val call = authTwitterService.allTweets
         call.enqueue(object : Callback<List<Tweet>> {
             override fun onResponse(call: Call<List<Tweet>>, response: Response<List<Tweet>>) {
                 if (response.isSuccessful) {
-                    data.setValue(response.body())
+                    allTweets.setValue(response.body())
                 } else {
                     Toast.makeText(MyApp.context, "Algo ha ido mal", Toast.LENGTH_SHORT).show()
                 }
@@ -42,6 +50,32 @@ class TweetRepository internal constructor() {
             }
         })
 
-        return data
+        return allTweets
+    }
+
+
+    fun createTweet(mensaje: String) {
+        val requestCreateTweet = RequestCreateTweet(mensaje)
+        val call = authTwitterService.createTweet(requestCreateTweet)
+
+        call.enqueue(object : Callback<Tweet> {
+            override fun onResponse(call: Call<Tweet>, response: Response<Tweet>) {
+                if (response.isSuccessful) {
+                    val listClone = ArrayList<Tweet>()
+                    // Añadimos en primer lugar el nuevo tweet que nos llega del server
+                    listClone.add(response.body()!!)
+                    for (i in 0 until allTweets.value!!.size) {
+                        listClone.add(Tweet(allTweets.value!![i]))
+                    }
+                    allTweets.value = listClone
+                } else {
+                    Toast.makeText(MyApp.context, "Algo ha ido mal, inténtelo de nuevo", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Tweet>, t: Throwable) {
+                Toast.makeText(MyApp.context, "Error en la conexión. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

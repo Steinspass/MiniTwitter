@@ -15,4 +15,8 @@ class TweetViewModel(application: Application) : AndroidViewModel(application) {
         tweetRepository = TweetRepository()
         tweets = tweetRepository.getAllTweets()
     }
+
+    fun insertTweet(mensaje: String) {
+        tweetRepository.createTweet(mensaje)
+    }
 }

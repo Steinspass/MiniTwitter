@@ -39,4 +39,6 @@ class Tweet {
         this.user = user
     }
 
+    constructor(tweet: Tweet)
+
 }
