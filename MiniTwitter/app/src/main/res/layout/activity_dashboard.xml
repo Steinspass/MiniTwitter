@@ -31,13 +31,14 @@
                         android:layout_height="wrap_content">
 
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imageViewToolbarPhoto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_account_circle_gris_24dp" />
+                            tools:src="@drawable/ic_account_circle_gris_24dp" />
 
                     <TextView
                             android:id="@+id/textViewToolbar"
@@ -75,6 +76,7 @@
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="24dp"
+                app:labelVisibilityMode="unlabeled"
                 app:backgroundTint="@color/colorBlue"
                 app:layout_constraintBottom_toTopOf="@+id/navigation"
                 app:layout_constraintEnd_toEndOf="parent"

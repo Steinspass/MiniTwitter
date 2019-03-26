@@ -13,9 +13,6 @@ import com.naimdridi.minitwitter.common.SharedPreferencesManager
 import com.naimdridi.minitwitter.common.Constans
 import com.naimdridi.minitwitter.data.TweetViewModel
 import android.arch.lifecycle.ViewModelProviders
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.new_tweet_full_dialog.view.*
 
 
@@ -41,17 +38,11 @@ class NewTweetDialogFragment: DialogFragment() {
                 .into(view.imageViewAvatar)
         }
 
-        onClick(view)
 
-        return view
-    }
-
-    private fun onClick(view: View) {
-
-        val mensaje = view.editTextMensaje.text.toString()
 
         view.buttonTwittear.setOnClickListener {
-            if (mensaje.isNotEmpty()){
+            val mensaje = view.editTextMensaje.text.toString()
+            if (!mensaje.isEmpty()){
                 val tweetViewModel = ViewModelProviders
                     .of(activity!!).get(TweetViewModel::class.java)
                 tweetViewModel.insertTweet(mensaje)
@@ -62,13 +53,40 @@ class NewTweetDialogFragment: DialogFragment() {
         }
 
         view.imageViewClose.setOnClickListener {
-            if (mensaje.isNotEmpty()){
+            val mensaje = view.editTextMensaje.text.toString()
+            if (!mensaje.isEmpty()){
                 showDialogConfirm()
             }else{
                 dialog.dismiss()
             }
         }
+
+        return view
     }
+
+  //private fun onClick(view: View) {
+
+  //    val mensaje = view.editTextMensaje.text.toString()
+
+  //    view.buttonTwittear.setOnClickListener {
+  //        if (mensaje.isNotEmpty()){
+  //            val tweetViewModel = ViewModelProviders
+  //                .of(activity!!).get(TweetViewModel::class.java)
+  //            tweetViewModel.insertTweet(mensaje)
+  //            dialog.dismiss()
+  //        }else{
+  //            Toast.makeText(activity, "Debe escribir un texto en el mensaje", Toast.LENGTH_SHORT).show()
+  //        }
+  //    }
+
+  //    view.imageViewClose.setOnClickListener {
+  //        if (mensaje.isNotEmpty()){
+  //            showDialogConfirm()
+  //        }else{
+  //            dialog.dismiss()
+  //        }
+  //    }
+  //}
 
     private fun showDialogConfirm() {
         // 1. Instantiate an AlertDialog.Builder with its constructor

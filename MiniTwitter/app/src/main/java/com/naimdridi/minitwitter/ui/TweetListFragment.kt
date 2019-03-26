@@ -12,7 +12,11 @@ import com.naimdridi.minitwitter.R
 import com.naimdridi.minitwitter.Retrofit.Response.Tweet
 import com.naimdridi.minitwitter.data.TweetViewModel
 import android.arch.lifecycle.Observer
+import android.os.Build
 import kotlinx.android.synthetic.main.fragment_tweet_list.view.*
+import android.support.v7.widget.GridLayoutManager
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.annotation.Nullable
 
 
 class TweetListFragment : Fragment() {
@@ -40,20 +44,32 @@ class TweetListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_tweet_list, container, false)
 
 
-        if (view.list is RecyclerView) {
-            val context = view.context
-            recycler = view as RecyclerView
-            if (columnCount <= 1) {
-                recycler.layoutManager = LinearLayoutManager(context)
-            }
-            adapter = MyTweetRecyclerViewAdapter(
-                activity!!,
-                tweetList
-            )
-            recycler.adapter = adapter
-
-            loadTweetData()
+        val context = view.context
+        val recyclerView = view.list
+        val swipeRefreshLayout = view.swiperefreshlayout
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.colorBlue, resources.newTheme()))
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = true
+            loadNewData()
+        }
+
+        if (columnCount <= 1) {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+        } else {
+            recyclerView.layoutManager = GridLayoutManager(context, columnCount)
+        }
+
+        adapter = MyTweetRecyclerViewAdapter(
+            activity!!,
+            tweetList
+        )
+        recyclerView.adapter = adapter
+
+        loadTweetData()
+
         return view
     }
 
@@ -67,6 +83,17 @@ class TweetListFragment : Fragment() {
                 adapter!!.setData(tweetList!!)
             })
 
+    }
+
+    private fun loadNewData() {
+        tweetViewModel.getNewTweets().observe(activity!!, object : Observer<List<Tweet>> {
+            override fun onChanged(@Nullable tweets: List<Tweet>?) {
+                tweetList = tweets
+                view!!.swiperefreshlayout.isRefreshing = false
+                adapter!!.setData(tweetList!!)
+                tweetViewModel.getNewTweets().removeObserver(this)
+            }
+        })
     }
 
     companion object {

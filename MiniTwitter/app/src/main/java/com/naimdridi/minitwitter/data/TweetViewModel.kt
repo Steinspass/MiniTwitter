@@ -7,9 +7,11 @@ import android.app.Application
 
 
 
+
+
 class TweetViewModel(application: Application) : AndroidViewModel(application) {
     private val tweetRepository: TweetRepository
-    val tweets: LiveData<List<Tweet>>
+    var tweets: LiveData<List<Tweet>>
 
     init {
         tweetRepository = TweetRepository()
@@ -18,5 +20,10 @@ class TweetViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insertTweet(mensaje: String) {
         tweetRepository.createTweet(mensaje)
+    }
+
+    fun getNewTweets(): LiveData<List<Tweet>> {
+        tweets = tweetRepository.getAllTweets()
+        return tweets
     }
 }
