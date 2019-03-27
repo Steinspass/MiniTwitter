@@ -15,14 +15,14 @@ import android.arch.lifecycle.Observer
 import android.os.Build
 import kotlinx.android.synthetic.main.fragment_tweet_list.view.*
 import android.support.v7.widget.GridLayoutManager
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.annotation.Nullable
+import com.naimdridi.minitwitter.common.Constans
 
 
 class TweetListFragment : Fragment() {
 
-    // TODO: Customize parameters
-    private var columnCount = 1
+
+    private var tweetListType = 1
     private var adapter: MyTweetRecyclerViewAdapter? = null
     private lateinit var recycler: RecyclerView
     var tweetList: List<Tweet>? = null
@@ -32,8 +32,9 @@ class TweetListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tweetViewModel = ViewModelProviders.of(activity!!).get(TweetViewModel::class.java)
+
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+            tweetListType = it.getInt(Constans.TWEET_LIST_TYPE)
         }
     }
 
@@ -53,14 +54,15 @@ class TweetListFragment : Fragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
-            loadNewData()
+            if( tweetListType == Constans.TWEET_LIST_ALL) {
+                loadNewData()
+            } else if( tweetListType == Constans.TWEET_LIST_FAVS) {
+                loadNewFavData()
+            }
         }
 
-        if (columnCount <= 1) {
-            recyclerView.layoutManager = LinearLayoutManager(context)
-        } else {
-            recyclerView.layoutManager = GridLayoutManager(context, columnCount)
-        }
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
 
         adapter = MyTweetRecyclerViewAdapter(
             activity!!,
@@ -68,9 +70,22 @@ class TweetListFragment : Fragment() {
         )
         recyclerView.adapter = adapter
 
-        loadTweetData()
+        if( tweetListType == Constans.TWEET_LIST_ALL) {
+            loadTweetData()
+        } else if( tweetListType == Constans.TWEET_LIST_FAVS) {
+            loadFavTweetData()
+        }
 
         return view
+    }
+
+
+    private fun loadNewFavData(){
+
+    }
+
+    private fun loadFavTweetData(){
+
     }
 
 
@@ -84,6 +99,9 @@ class TweetListFragment : Fragment() {
             })
 
     }
+
+
+
 
     private fun loadNewData() {
         tweetViewModel.getNewTweets().observe(activity!!, object : Observer<List<Tweet>> {
@@ -103,10 +121,10 @@ class TweetListFragment : Fragment() {
 
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(tweetListType: Int) =
             TweetListFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
+                    putInt(Constans.TWEET_LIST_TYPE, tweetListType)
                 }
             }
     }

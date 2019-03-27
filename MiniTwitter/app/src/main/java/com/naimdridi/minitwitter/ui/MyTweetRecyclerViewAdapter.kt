@@ -14,18 +14,20 @@ import com.naimdridi.minitwitter.R
 import com.naimdridi.minitwitter.Retrofit.Response.Tweet
 import com.naimdridi.minitwitter.common.Constans
 import com.naimdridi.minitwitter.common.SharedPreferencesManager
-
-
-
+import com.naimdridi.minitwitter.data.TweetViewModel
+import android.support.v4.app.FragmentActivity
+import android.arch.lifecycle.ViewModelProviders
 
 
 
 class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: List<Tweet>?) :
     RecyclerView.Adapter<MyTweetRecyclerViewAdapter.ViewHolder>() {
     internal var username: String? = null
+    var tweetViewModel: TweetViewModel? = null
 
     init {
         username = SharedPreferencesManager().getSomeStringValue(Constans.PREF_USERNAME)
+        tweetViewModel = ViewModelProviders.of(ctx as FragmentActivity).get(TweetViewModel::class.java)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -56,6 +58,8 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
             //holder.tvLikesCount.setTextColor(ctx.resources.getColor(android.R.color.black))
             holder.tvLikesCount.setTypeface(null, Typeface.NORMAL)
 
+            holder.ivLike.setOnClickListener { tweetViewModel!!.likeTweet(holder.mItem.id!!) }
+
             for (like in holder.mItem.likes) {
                 if (like.username == username) {
                     Glide.with(ctx)
@@ -67,8 +71,6 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
                 }
             }
         }
-
-
     }
 
     override fun getItemCount(): Int {
@@ -99,8 +101,5 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
             tvLikesCount = mView.findViewById(R.id.textViewLikes)
         }
 
-        override fun toString(): String {
-            return super.toString() + " '" + tvUsername.text + "'"
-        }
     }
 }

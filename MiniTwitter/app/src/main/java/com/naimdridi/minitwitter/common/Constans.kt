@@ -12,4 +12,9 @@ object Constans {
     val PREF_PHOTOURL = "PREF_PHOTOURL"
     val PREF_CREATED = "PREF_CREATED"
     val PREF_ACTIVE = "PREF_ACTIVE"
+
+    // Arguments
+    val TWEET_LIST_TYPE = "TWEET_LIST_TYPE"
+    val TWEET_LIST_ALL = 1
+    val TWEET_LIST_FAVS = 2
 }

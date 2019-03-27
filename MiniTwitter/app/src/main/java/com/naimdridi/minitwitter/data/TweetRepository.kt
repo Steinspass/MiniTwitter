@@ -17,6 +17,9 @@ import com.naimdridi.minitwitter.Retrofit.Request.RequestCreateTweet
 
 
 
+
+
+
 class TweetRepository internal constructor() {
     internal var authTwitterService: AuthTwitterService
     internal var authTwitterClient: AuthTwitterClient
@@ -75,6 +78,38 @@ class TweetRepository internal constructor() {
 
             override fun onFailure(call: Call<Tweet>, t: Throwable) {
                 Toast.makeText(MyApp.context, "Error en la conexión. Inténtelo de nuevo.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun likeTweet(idTweet: Int) {
+        val call = authTwitterService.likeTweet(idTweet)
+
+        call.enqueue(object : Callback<Tweet> {
+            override fun onResponse(call: Call<Tweet>, response: Response<Tweet>) {
+                if (response.isSuccessful) {
+                    val listaClonada = ArrayList<Tweet>()
+
+                    for (i in 0 until allTweets.value!!.size) {
+                        if (allTweets.value!![i].id == idTweet) {
+                            // Si hemos encontrado en la lista original
+                            // el elemento sobre el que hemos hecho like,
+                            // introducimos el elemento que nos ha llegado del
+                            // servidor
+                            listaClonada.add(response.body()!!)
+                        } else {
+                            listaClonada.add(Tweet(allTweets.value!![i]))
+                        }
+                    }
+                    allTweets.setValue(listaClonada)
+                } else {
+                    Toast.makeText(MyApp.context, "Algo ha ido mal, inténtelo de nuevo", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Tweet>, t: Throwable) {
+                Toast.makeText(MyApp.context, "Error en la conexión. Inténtelo de nuevo.", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

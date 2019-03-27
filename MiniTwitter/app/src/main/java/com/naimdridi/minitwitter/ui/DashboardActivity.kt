@@ -2,7 +2,9 @@ package com.naimdridi.minitwitter.ui
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import com.bumptech.glide.Glide
 import com.naimdridi.minitwitter.R
@@ -13,21 +15,35 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 
 
 
+
+
+
 class DashboardActivity : AppCompatActivity() {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
+
+        override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+            var f: Fragment? = null
+
+            when (item.itemId) {
+                R.id.navigation_home -> f = TweetListFragment.newInstance(Constans.TWEET_LIST_ALL)
+                R.id.navigation_tweets_likes -> f = TweetListFragment.newInstance(Constans.TWEET_LIST_FAVS)
+                R.id.navigation_profile -> {
+                }
             }
-            R.id.navigation_tweets_likes -> {
-                return@OnNavigationItemSelectedListener true
+
+            if (f != null) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentContainer, f)
+                    .commit()
+                return true
             }
-            R.id.navigation_profile -> {
-                return@OnNavigationItemSelectedListener true
-            }
+
+
+            return false
         }
-        false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +59,7 @@ class DashboardActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragmentContainer, TweetListFragment())
+            .add(R.id.fragmentContainer, TweetListFragment.newInstance(Constans.TWEET_LIST_ALL))
             .commit()
 
         setUpFab()

@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import com.naimdridi.minitwitter.Retrofit.Request.RequestCreateTweet
 import retrofit2.http.POST
 import retrofit2.http.Body
+import retrofit2.http.Path
 
 
 interface AuthTwitterService {
@@ -15,4 +16,8 @@ interface AuthTwitterService {
 
     @POST("tweets/create")
     fun createTweet(@Body requestCreateTweet: RequestCreateTweet): Call<Tweet>
+
+    @POST("tweets/like/{idTweet}")
+    fun likeTweet(@Path("idTweet") idTweet: Int): Call<Tweet>
+
 }

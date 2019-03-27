@@ -26,4 +26,7 @@ class TweetViewModel(application: Application) : AndroidViewModel(application) {
         tweets = tweetRepository.getAllTweets()
         return tweets
     }
+    fun likeTweet(idTweet: Int){
+        tweetRepository.likeTweet(idTweet)
+    }
 }
