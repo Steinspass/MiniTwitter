@@ -14,9 +14,13 @@ import com.naimdridi.minitwitter.data.TweetViewModel
 import android.arch.lifecycle.Observer
 import android.os.Build
 import kotlinx.android.synthetic.main.fragment_tweet_list.view.*
-import android.support.v7.widget.GridLayoutManager
 import android.support.annotation.Nullable
 import com.naimdridi.minitwitter.common.Constans
+
+
+
+
+
 
 
 class TweetListFragment : Fragment() {
@@ -81,11 +85,22 @@ class TweetListFragment : Fragment() {
 
 
     private fun loadNewFavData(){
-
+        tweetViewModel.getNewFavTweets().observe(activity!!, object : Observer<List<Tweet>> {
+            override fun onChanged(tweets: List<Tweet>?) {
+                tweetList = tweets
+                view!!.swiperefreshlayout.isRefreshing = false
+                adapter!!.setData(tweetList!!)
+                tweetViewModel.getNewFavTweets().removeObserver(this)
+            }
+        })
     }
 
     private fun loadFavTweetData(){
-
+        tweetViewModel.getFavTweets().observe(activity!!,
+            Observer { tweets ->
+                tweetList = tweets
+                adapter!!.setData(tweetList!!)
+            })
     }
 
 

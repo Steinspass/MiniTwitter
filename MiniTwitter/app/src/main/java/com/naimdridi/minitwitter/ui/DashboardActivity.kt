@@ -27,9 +27,16 @@ class DashboardActivity : AppCompatActivity() {
             var f: Fragment? = null
 
             when (item.itemId) {
-                R.id.navigation_home -> f = TweetListFragment.newInstance(Constans.TWEET_LIST_ALL)
-                R.id.navigation_tweets_likes -> f = TweetListFragment.newInstance(Constans.TWEET_LIST_FAVS)
+                R.id.navigation_home -> {
+                    f = TweetListFragment.newInstance(Constans.TWEET_LIST_ALL)
+                    fab.show()
+                }
+                R.id.navigation_tweets_likes ->{
+                    f = TweetListFragment.newInstance(Constans.TWEET_LIST_FAVS)
+                    fab.hide()
+                }
                 R.id.navigation_profile -> {
+
                 }
             }
 

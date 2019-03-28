@@ -10,12 +10,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.naimdridi.minitwitter.Retrofit.Request.RequestCreateTweet
-
-
-
-
-
-
+import com.naimdridi.minitwitter.common.Constans
+import com.naimdridi.minitwitter.common.SharedPreferencesManager
 
 
 
@@ -24,11 +20,14 @@ class TweetRepository internal constructor() {
     internal var authTwitterService: AuthTwitterService
     internal var authTwitterClient: AuthTwitterClient
     internal var allTweets: MutableLiveData<List<Tweet>>
+    var favTweets: MutableLiveData<List<Tweet>>? = null
+    var userName: String? = null
 
     init {
         authTwitterClient = AuthTwitterClient.getInstance()
         authTwitterService = authTwitterClient.getAuthTwitterService()
         allTweets = getAllTweets()
+        userName = SharedPreferencesManager().getSomeStringValue(Constans.PREF_USERNAME)
     }
 
     fun getAllTweets(): MutableLiveData<List<Tweet>> {
@@ -54,6 +53,30 @@ class TweetRepository internal constructor() {
         })
 
         return allTweets
+    }
+
+    fun getFavsTweets(): MutableLiveData<List<Tweet>> {
+        if (favTweets == null)
+            favTweets = MutableLiveData()
+
+        val newFavList = ArrayList<Tweet>()
+        val itTweets = allTweets.value!!.iterator()
+
+        while (itTweets.hasNext()) {
+            val current = itTweets.next()
+            val itLikes = current.likes.iterator()
+            var enc = false
+            while (itLikes.hasNext() && !enc) {
+                if (itLikes.next().username == userName) {
+                    enc = true
+                    newFavList.add(current)
+                }
+            }
+        }
+
+        favTweets!!.setValue(newFavList)
+
+        return favTweets as MutableLiveData<List<Tweet>>
     }
 
 

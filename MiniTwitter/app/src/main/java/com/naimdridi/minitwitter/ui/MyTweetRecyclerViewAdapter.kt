@@ -22,7 +22,7 @@ import android.arch.lifecycle.ViewModelProviders
 
 class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: List<Tweet>?) :
     RecyclerView.Adapter<MyTweetRecyclerViewAdapter.ViewHolder>() {
-    internal var username: String? = null
+    private var username: String? = null
     var tweetViewModel: TweetViewModel? = null
 
     init {
