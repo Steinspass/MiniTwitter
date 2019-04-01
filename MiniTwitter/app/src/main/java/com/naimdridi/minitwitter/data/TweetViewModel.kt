@@ -5,13 +5,9 @@ import com.naimdridi.minitwitter.Retrofit.Response.Tweet
 import android.arch.lifecycle.LiveData
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
-
-
-
-
-
-
-
+import android.content.Context
+import android.support.v7.app.AppCompatActivity
+import com.naimdridi.minitwitter.BottomModalTweetFragment
 
 
 
@@ -49,4 +45,15 @@ class TweetViewModel(application: Application) : AndroidViewModel(application) {
     fun likeTweet(idTweet: Int){
         tweetRepository.likeTweet(idTweet)
     }
+
+    fun deleteTweet(idTweet: Int){
+        tweetRepository.deleteTweet(idTweet)
+    }
+
+    fun openDialogTweetMenu(ctx: Context, idTweet: Int) {
+        val dialogTweet = BottomModalTweetFragment().newInstance(idTweet)
+        dialogTweet.show((ctx as AppCompatActivity).supportFragmentManager, "BottomModalTweetFragment")
+    }
+
+
 }

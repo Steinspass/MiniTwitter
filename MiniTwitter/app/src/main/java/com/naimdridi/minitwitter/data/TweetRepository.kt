@@ -12,6 +12,9 @@ import retrofit2.Response
 import com.naimdridi.minitwitter.Retrofit.Request.RequestCreateTweet
 import com.naimdridi.minitwitter.common.Constans
 import com.naimdridi.minitwitter.common.SharedPreferencesManager
+import com.naimdridi.minitwitter.Retrofit.Response.TweetDeleted
+
+
 
 
 
@@ -74,7 +77,7 @@ class TweetRepository internal constructor() {
             }
         }
 
-        favTweets!!.setValue(newFavList)
+        favTweets!!.value = newFavList
 
         return favTweets as MutableLiveData<List<Tweet>>
     }
@@ -131,6 +134,33 @@ class TweetRepository internal constructor() {
             }
 
             override fun onFailure(call: Call<Tweet>, t: Throwable) {
+                Toast.makeText(MyApp.context, "Error en la conexión. Inténtelo de nuevo.", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
+    }
+
+    fun deleteTweet(idTweet: Int) {
+        val call = authTwitterService.deleteTweet(idTweet)
+
+        call.enqueue(object : Callback<TweetDeleted> {
+            override fun onResponse(call: Call<TweetDeleted>, response: Response<TweetDeleted>) {
+                if (response.isSuccessful) {
+                    val clonedTweets = ArrayList<Tweet>()
+                    for (i in 0 until allTweets.value!!.size) {
+                        if (allTweets.value!![i].id != idTweet) {
+                            clonedTweets.add(Tweet(allTweets.value!![i]))
+                        }
+                    }
+
+                    allTweets.value = clonedTweets
+                    getFavsTweets()
+                } else {
+                    Toast.makeText(MyApp.context, "Algo ha ido mal, inténtelo de nuevo", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<TweetDeleted>, t: Throwable) {
                 Toast.makeText(MyApp.context, "Error en la conexión. Inténtelo de nuevo.", Toast.LENGTH_SHORT)
                     .show()
             }

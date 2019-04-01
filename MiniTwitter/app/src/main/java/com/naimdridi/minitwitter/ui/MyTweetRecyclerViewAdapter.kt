@@ -41,11 +41,11 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
         if (mValues != null){
             holder.mItem = mValues!![position]
 
-            holder.tvUsername.text = holder.mItem.user!!.username
+            holder.tvUsername.text = holder.mItem.user?.username
             holder.tvMessage.text = holder.mItem.mensaje
             holder.tvLikesCount.text = holder.mItem.likes.size.toString()
 
-            val photo = holder.mItem.user!!.photoUrl
+            val photo = holder.mItem.user?.photoUrl
             if (photo != "") {
                 Glide.with(ctx)
                     .load("https://www.minitwitter.com/apiv1/uploads/photos/" + photo!!)

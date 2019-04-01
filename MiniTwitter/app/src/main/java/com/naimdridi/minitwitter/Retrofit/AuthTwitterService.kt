@@ -7,6 +7,10 @@ import com.naimdridi.minitwitter.Retrofit.Request.RequestCreateTweet
 import retrofit2.http.POST
 import retrofit2.http.Body
 import retrofit2.http.Path
+import com.naimdridi.minitwitter.Retrofit.Response.TweetDeleted
+import retrofit2.http.DELETE
+
+
 
 
 interface AuthTwitterService {
@@ -19,5 +23,8 @@ interface AuthTwitterService {
 
     @POST("tweets/like/{idTweet}")
     fun likeTweet(@Path("idTweet") idTweet: Int): Call<Tweet>
+
+    @DELETE("tweets/{idTweet}")
+    fun deleteTweet(@Path("idTweet") idTweet: Int): Call<TweetDeleted>
 
 }
