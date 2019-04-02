@@ -48,7 +48,7 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
             val photo = holder.mItem.user?.photoUrl
             if (photo != "") {
                 Glide.with(ctx)
-                    .load("https://www.minitwitter.com/apiv1/uploads/photos/" + photo!!)
+                    .load("https://www.minitwitter.com/apiv1/uploads/photos/$photo")
                     .into(holder.ivAvatar)
             }
 
@@ -70,6 +70,15 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
                     break
                 }
             }
+
+            holder.ivshowMenu.visibility = View.GONE
+            if (holder.mItem.user?.username.equals(username)){
+                holder.ivshowMenu.visibility = View.VISIBLE
+            }
+
+            holder.ivshowMenu.setOnClickListener {
+                tweetViewModel?.openDialogTweetMenu(ctx, holder.mItem.id!!)
+            }
         }
     }
 
@@ -88,6 +97,7 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val ivAvatar: ImageView
         val ivLike: ImageView
+        val ivshowMenu: ImageView
         val tvUsername: TextView
         val tvMessage: TextView
         val tvLikesCount: TextView
@@ -96,6 +106,7 @@ class MyTweetRecyclerViewAdapter(private val ctx: Context, private var mValues: 
         init {
             ivAvatar = mView.findViewById(R.id.imageViewAvatar)
             ivLike = mView.findViewById(R.id.imageViewLike)
+            ivshowMenu = mView.findViewById(R.id.imageViewShowMenu)
             tvUsername = mView.findViewById(R.id.textViewUsername)
             tvMessage = mView.findViewById(R.id.textViewMessage)
             tvLikesCount = mView.findViewById(R.id.textViewLikes)

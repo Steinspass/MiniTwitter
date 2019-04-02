@@ -24,6 +24,7 @@ class BottomModalTweetFragment : BottomSheetDialogFragment() {
         val fragment = BottomModalTweetFragment()
         val args = Bundle()
         args.putInt(Constans.ARG_TWEET_ID, idTweet)
+        fragment.arguments = args
         return fragment
     }
 
@@ -62,7 +63,7 @@ class BottomModalTweetFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tweetViewModel = ViewModelProviders.of(this).get(TweetViewModel::class.java)
+        tweetViewModel = ViewModelProviders.of(activity!!).get(TweetViewModel::class.java)
     }
 
 }
